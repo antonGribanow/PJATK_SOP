@@ -1,8 +1,38 @@
 #Napisz skrypt ktory dla karzdego pliku, znajdujacego sie w bierzacym katalogu o nazwie spielniejacej nastepujace warunki:
-1. rozpoczynajacej sie od dowolnego znaku
-2. na kolejnych znakach posiadajjacej string 2017
-3. i dalej mogacych miec dowolne znaki w nazwie pliku
-4. posiadajacy rozszeczenie nazwy txt
-5. okresli ilosc zawartych w nim porzczegolnych liczb calkowitych: parzdystych, nieparzeystyc i zero. Zakladamy ze dane zawarte w plikach sa poprawne tcn. pliki nie zwieraja innych danychniz wyzej wymienionych. Przykladowy komunikat bedacy efektem dzialania tego skryptu przedstawiono ponizej:
-plik a201701.txt zaweira: 10 parzystych i 5 nieparzystych liczzboraz 5 liczb zero.
+#1. rozpoczynajacej sie od dowolnego znaku
+#2. na kolejnych znakach posiadajjacej string 2017
+#3. i dalej mogacych miec dowolne znaki w nazwie pliku
+#4. posiadajacy rozszeczenie nazwy txt
+#5. okresli ilosc zawartych w nim porzczegolnych liczb 
+#calkowitych: parzdystych, nieparzeystyc i zero. Zakladamy ze 
+#dane zawarte w plikach sa poprawne tcn. pliki nie zwieraja 
+#innych danychniz wyzej wymienionych. Przykladowy komunikat 
+#bedacy efektem dzialania tego skryptu przedstawiono ponizej:
+#plik a201701.txt zaweira: 10 parzystych i 5 nieparzystych 
+#liczzboraz 5 liczb zero.
+
+for PLIK in `ls ?2017*.txt` ; do
+     if [ -f $PLIK ] ; then
+       LP=0
+       LNP=0
+       LZ=0
+       while read LINIA ; do
+         for LICZBA in $LINIA ; do
+	   if [ $LICZBA -eq 0 ] ; then
+ 	     let LZ++
+	   else
+	     WYNIK=$(($LICZBA % 2))
+             if [ $WYNIK -eq 0 ] ; then
+               let LP++
+	     else
+               let LNP++
+             fi
+          fi
+ 	 done
+       done < "$PLIK"
+       echo "Plik $PLIK zawiera $LP parzystych i $LNP 
+nieparzystych liczb"
+       echo " oraz $LP liczb zero." 
+     fi
+done
 
